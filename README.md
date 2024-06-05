@@ -193,3 +193,171 @@ purposely to identify each of the 4 datasets withing the merged_data
 #### 11.2 check data info to understand data structure
 ![info on merged_data](/Screenshots/merged.info.png)
 
+### 11.3 Dataset Overview
+
+- Total Entries: 2,879
+- Total Columns: 10
+
+**Missing Values Analysis**
+- company_name: 2,879 non-null (no missing values)
+- sector: 2,861 non-null (18 missing values)
+- stage: 1,934 non-null (945 missing values)
+- funding_amount: 2,312 non-null (567 missing values)
+- location: 2,879 non-null (no missing values)
+- description: 2,879 non-null (no missing values)
+- Founded: 2,110 non-null (769 missing values)
+- Founders: 2,334 non-null (545 missing values)
+- Investor: 2,246 non-null (633 missing values)
+- Year: 2,879 non-null (no missing values)
+
+#### 11.4 Cleaning Approach - Column CLeaning
+
+#### Sector column
+ - Print all unique values in the column to check errors and anomalities
+
+ It was observed the sector column had a lot of reapeted sector names with different value characteristcs, hence appearing to be unique, the values were mixed up with upper case values, lower case values, wrong puntuations, spelling errors
+
+Approach to observation - Sector mapping
+![](/Screenshots/Sector%20mapping.png) 
+This ensured I have consistency in the sector column for all sector analyses, while all other erros  and irregularities were replaced with pd.NaN 
+
+#### Amount Column
+Print all value characteristics to understand the amount by printing all the unique values.
+```python
+'''All unique values in amount column was printed to detect characteristics of the values below'''
+
+# Additional characteristics to count
+characteristics = ['—', '\$', '\$Undisclosed', 'Undisclosed', 'None', 'nan', 'Series C', 'Seed', 'Pre-series A', '₹']
+
+# Initialize counts dictionary
+counts = {char: 0 for char in characteristics}
+
+# Count occurrences of each characteristic
+for characteristic in characteristics:
+    if characteristic in {'—', '\$', '\$Undisclosed', 'Undisclosed', 'None', 'nan', 'Series C', 'Seed', 'Pre-series A', '₹'}:
+        count = merged_data['funding_amount'].astype(str).str.contains(characteristic, regex=True, na=False).sum()
+    else:
+        count = merged_data['funding_amount'].astype(str).str.contains(f"\\b{characteristic}\\b", regex=True, na=False).sum()
+    counts[characteristic] = count
+
+# Count occurrences of numeric values
+numeric_count = merged_data['funding_amount'].notnull().sum()
+
+# Print counts
+for characteristic, count in counts.items():
+    print(f'{characteristic} - {count}')
+print(f'Numeric values - {numeric_count}')
+```
+![Output of amount value characteristics](/Screenshots/Val%20Character.png)
+- Values ['Series C', 'Seed', 'Pre-series A'] indicates wrong enteries, they were pushed to their respective column 'stage column'
+- All dollar symbols were dropped
+- The dahes '-' were dropped and replaced with nan
+- All values with rupee symbols where converted to dollors by multiplying the respective values by the average exchange rate
+![currency conversion](/Screenshots/Conversion.png)
+
+The corrections in amount column was done using the code:
+```python
+# Define the exchange rate
+exchange_rate = 0.0140
+
+# Replace '—' in funding_amount with np.nan
+merged_data['funding_amount'].replace('—', np.nan, inplace=True)
+
+# Replace 'None' with np.nan
+merged_data['funding_amount'].replace('None', np.nan, inplace=True)
+
+# Convert funding_amount to string type
+merged_data['funding_amount'] = merged_data['funding_amount'].astype(str)
+
+# Remove dollar symbol and commas, then convert to float
+merged_data['funding_amount'] = merged_data['funding_amount'].str.replace('$', '', regex=False)
+merged_data['funding_amount'] = merged_data['funding_amount'].str.replace(',', '', regex=False)
+
+# Convert Rupee values to USD and remove the rupee symbol
+merged_data['funding_amount'] = merged_data['funding_amount'].apply(
+    lambda x: float(x.replace('₹', '')) * exchange_rate if isinstance(x, str) and '₹' in x else x
+)
+
+# Convert funding_amount to float type
+merged_data['funding_amount'] = pd.to_numeric(merged_data['funding_amount'], errors='coerce')
+```
+
+### Location column 
+- Printed all unique values
+- Identify wrong values and anomalities
+- Corrected spelling errors for consistency 
+![city renaming](/Screenshots/City%20rename.png)
+
+- The remaining columns followed the same approcah in cleaning and removing all anomalities
+- Columns 'Founders and Founded' were both dropped from merged DataFrame as it was not relevant to the analysis and objectives.
+
+## 12. Handle Missing Values in Merged DataFrame
+- impute missing categorical values with mode
+- forward fill on missing values in stage column
+- median fill on the amount of missing values
+![](/Screenshots/Missing%20Val's.png)
+
+## 13. Explored data and answered Analytical Questions
+- look at the growth trend of startups and sizes of startups that recieved funding each year
+![trend of startups](/Screenshots/trend.png)
+- Average Amount each year
+![Average amount received by startups](/Screenshots/yearly%20avg%20amt.png)
+- Growth of funding
+![Amount trend](/Screenshots/amount%20trend.png)
+- Top 10 Cities with most startups 
+![Industrial hub](/Screenshots/Top%20ten%20cities%20with%20most%20startup.png)
+- Dominat Sectors
+![top sectors](/Screenshots/Top%2010%20sectors.png)
+- top Investors
+![top investors](/Screenshots/investors.png)
+- Proportion of investment done between 2018 - 2021
+![Proportions](/Screenshots/Proportion%20investors.png)
+- Dominate stages of businesses the investors spend much on
+![stages in the ecosystem doing well](/Screenshots/dominat%20stages.png)
+- top the industrial cisties with businesses in Stage B
+![cities with most stage B startups](/Screenshots/Industrial%20hubs.png)
+
+# 14. Test Hypothesis at 95% confidence level
+**Null Hypothesis (H0):**
+There is no significant difference in the average funding amounts received across different sectors within the Indian startup ecosystem from 2018 to 2021.
+
+**Alternative Hypothesis (H1):**
+There is a significant difference in the average funding amounts received across different sectors within the Indian startup ecosystem from 2018 to 2021.
+
+```python
+import scipy.stats as stats
+
+# Extract funding amounts for each sector
+sector_funding = [merged_data[merged_data['sector'] == sector]['funding_amount'] for sector in merged_data['sector'].unique()]
+
+# Perform one-way ANOVA
+f_statistic, p_value = stats.f_oneway(*sector_funding)
+
+alpha = 0.05
+
+# Print the results
+print("F-Statistic:", f_statistic)
+print("P-Value:", p_value)
+
+# Check for significance
+if p_value < alpha:
+    print("Reject Null Hypothesis. There is a significant difference in average funding amounts across sectors.")
+else:
+    print("Fail to reject Null Hypothesis. There is no significant difference in average funding amounts across sectors.")
+```
+![Result](/Screenshots/hypothesis.png)
+- Failed to reject null hypothesis and conclude with 95% confidence that average funding amount do not vary across the sectors.
+
+# Recommendation
+
+Based on the observations on the Indian startup ecosystem, here are some informed recommendations for the team to consider to make informed decision:
+
+1. **Stay Resilient and Adaptable:** The Indian startup ecosystem has shown resilience and potential for growth, even in the face of challenges like the economic uncertainty associated with the COVID-19 pandemic. The team should be prepared to navigate uncertainties and adapt strategies as needed.
+
+2. **Focus on High-Growth Sectors:** The booming sectors within the Indian startup ecosystem, such as FinTech, EdTech, Finance, E-Commerce, and SaaS, present lucrative opportunities for investment and innovation. The team should consider these sectors to capitalize on the growing demand and investor interest.
+
+3. **Location Strategy:** Bangalore emerges as the industrial hub in India, with a high concentration of startups, particularly in the FinTech sector. The team should consider establishing a presence in Bangalore to tap into the vibrant startup ecosystem and access talent, resources, and networking opportunities.
+
+4. **Strategic Partnerships with Top Investors:** The team is encouraged to form strategic partnerships with top investors like Inflection Point Ventures, Venture Catalysts, and Mumbai Angels Network. These investors have a proven track record of funding successful startups across diverse sectors and can provide valuable insights, mentorship, funding opportunities.
+
+5. **Focus on Series B Investments:** Given the preference of top investors for Series B investments, the team should consider targeting startups at this stage for investment or partnership opportunities. Series B startups have typically proven their business model and are ready to scale, offering lower risk and significant growth potential.
