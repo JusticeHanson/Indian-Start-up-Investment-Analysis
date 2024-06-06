@@ -143,7 +143,7 @@ data_2019.head(5)
 data_2018
 ![output data_2018](/Screenshots/2018.png)
 
-# 10.5 For consistency, rename all columns befor merged 
+# 10.5 For consistency, rename all columns before merged 
 
 ```python
 data_2018.rename(columns={
