@@ -1,8 +1,8 @@
-# Indian-Start-up-Investment-Analysis :chart_with_upwards_trend:
+# Indian-Start-up-Investment-Analysis :mag_right:
 ------------------------------------------------
 ### :link:Azubi Africa: Data Analytic Project (LP1)
 
-# 1. Project Overview
+# 1. Project Overview 
 In this project, I explore the dynamic landscape of start-up funding in India from 2018 to 2021. My goal is to uncover key patterns, trends, and insights that characterize the investment ecosystem during these years. The dataset for this analysis was gathered from three different sources:
 
 *First Dataset:* The data for 2020 and 2021 were stored in Microsoft SQL Server.
@@ -34,17 +34,17 @@ There is no significant difference in the average funding amounts received acros
 **Alternative Hypothesis (H1):**
 There is a significant difference in the average funding amounts received across different sectors within the Indian startup ecosystem from 2018 to 2021.
 
-4. # Business Questions
+# 4. Business Questions
 
-(4.1)  Analyze the growth trajectory of startups over the past four years from 2018 to 2021. Investigate if there is an increase in the number of startups being funded and the average size companies of funded annually.
+:one: Analyze the growth trajectory of startups over the past four years from 2018 to 2021. Investigate if there is an increase in the number of startups being funded and the average size companies of funded annually.
 
- (4.2)  Investigate the financial landscape for Indian startups over the four years. Has the average funding amount increased, indicating growing investor confidence, or has it plateaued or decreased overtime?
+ :two: Investigate the financial landscape for Indian startups over the four years. Has the average funding amount increased, indicating growing investor confidence, or has it plateaued or decreased overtime?
  
- (4.3) Identify the booming sectors withing the ecosystem and which top city serves as the industrial hub in India.
+ :three: Identify the booming sectors withing the ecosystem and which top city serves as the industrial hub in India.
  
- (4.4) Determine the top investors within the startup ecosystem and identify the proportion of investment by the first 3 investors that have funded different sectors from 2018 - 2021 
+ :four: Determine the top investors within the startup ecosystem and identify the proportion of investment by the first 3 investors that have funded different sectors from 2018 - 2021 
  
- (4.5) Explore which stages of startups (e.g., Seed, Series A, Series B) are receiving the majority of investments. What are the predominant stages funded, and which cities are the identified stages of business situated. 
+ :five: Explore which stages of startups (e.g., Seed, Series A, Series B) are receiving the majority of investments. What are the predominant stages funded, and which cities are the identified stages of business situated. 
 
  # 5. Deliverables
 - A hypothesis.
@@ -145,7 +145,7 @@ data_2019.head(5)
 data_2018
 ![output data_2018](/Screenshots/2018.png)
 
-# 11. For consistency, rename all columns befor merged 
+# 10.5 For consistency, rename all columns befor merged 
 
 ```python
 data_2018.rename(columns={
@@ -187,13 +187,13 @@ merged_data.head(5)
 ```
 This helped me to have consistent column names for the merged dataset
 
-#### 11.1 created new column 'Year'
+#### 10.6 created new column 'Year'
 purposely to identify each of the 4 datasets withing the merged_data
 
 #### 11.2 check data info to understand data structure
 ![info on merged_data](/Screenshots/merged.info.png)
 
-### 11.3 Dataset Overview
+### 11.7 Dataset Overview
 
 - Total Entries: 2,879
 - Total Columns: 10
@@ -210,7 +210,7 @@ purposely to identify each of the 4 datasets withing the merged_data
 - Investor: 2,246 non-null (633 missing values)
 - Year: 2,879 non-null (no missing values)
 
-#### 11.4 Cleaning Approach - Column CLeaning
+# 12. Cleaning Approach - Column CLeaning
 
 #### Sector column
  - Print all unique values in the column to check errors and anomalities
@@ -291,30 +291,30 @@ merged_data['funding_amount'] = pd.to_numeric(merged_data['funding_amount'], err
 - The remaining columns followed the same approcah in cleaning and removing all anomalities
 - Columns 'Founders and Founded' were both dropped from merged DataFrame as it was not relevant to the analysis and objectives.
 
-## 12. Handle Missing Values in Merged DataFrame
+##  Handle Missing Values in Merged DataFrame
 - impute missing categorical values with mode
 - forward fill on missing values in stage column
 - median fill on the amount of missing values
 ![](/Screenshots/Missing%20Val's.png)
 
 ## 13. Explored data and answered Analytical Questions
-- look at the growth trend of startups and sizes of startups that recieved funding each year
+:small_blue_diamond:look at the growth trend of startups and sizes of startups that recieved funding each year 
 ![trend of startups](/Screenshots/trend.png)
-- Average Amount each year
+:small_blue_diamond:Average Amount each year
 ![Average amount received by startups](/Screenshots/yearly%20avg%20amt.png)
-- Growth of funding
+:small_blue_diamond:Growth of funding
 ![Amount trend](/Screenshots/amount%20trend.png)
-- Top 10 Cities with most startups 
+:small_blue_diamond:Top 10 Cities with most startups 
 ![Industrial hub](/Screenshots/Top%20ten%20cities%20with%20most%20startup.png)
-- Dominat Sectors
+:small_blue_diamond:Dominant Sectors
 ![top sectors](/Screenshots/Top%2010%20sectors.png)
-- top Investors
+:small_blue_diamond:Top Investors
 ![top investors](/Screenshots/investors.png)
-- Proportion of investment done between 2018 - 2021
+:small_blue_diamond:Proportion of investment done between 2018 - 2021
 ![Proportions](/Screenshots/Proportion%20investors.png)
-- Dominate stages of businesses the investors spend much on
+:small_blue_diamond:Dominant stages of businesses the investors spend much on
 ![stages in the ecosystem doing well](/Screenshots/dominat%20stages.png)
-- top the industrial cisties with businesses in Stage B
+:small_blue_diamond:Top the industrial cisties with businesses in Stage B
 ![cities with most stage B startups](/Screenshots/Industrial%20hubs.png)
 
 # 14. Test Hypothesis at 95% confidence level
