@@ -22,8 +22,6 @@ In this phase, I define the business objectives, develop hypotheses, and raise q
 
 ## 2.2 Business Task
 
-## Business Task
-
 As the data expert for my team, my task is to analyze Indian start-up data to provide valuable insights and answers for me team seeking to venture into the Indian start-up ecosystem. My goal is to highlight key metrics and considerations that will inform and guide their decisions before entering this dynamic market.
 
 # 3. Hypothesis
@@ -84,7 +82,7 @@ The 2018 start-up data lacks two columns (Founders, Founded) that are present in
 All four dataset (2018 -2021 ) was retrived from ther respective source for the purpose of this analysis. 
 
 # 9. Tools for Analysis
- I will utilize the following tools:
+ I utilize the following tools:
 
 - **Python's:**
 
@@ -304,7 +302,8 @@ merged_data['funding_amount'] = pd.to_numeric(merged_data['funding_amount'], err
 ![Average amount received by startups](/Screenshots/yearly%20avg%20amt.png)
 :small_blue_diamond:Growth of funding
 ![Amount trend](/Screenshots/amount%20trend.png)
-:small_blue_diamond:Top 10 Cities with most startups 
+
+:small_blue_diamond: Top 10 Cities with most startups 
 ![Industrial hub](/Screenshots/Top%20ten%20cities%20with%20most%20startup.png)
 :small_blue_diamond:Dominant Sectors
 ![top sectors](/Screenshots/Top%2010%20sectors.png)
@@ -314,7 +313,7 @@ merged_data['funding_amount'] = pd.to_numeric(merged_data['funding_amount'], err
 ![Proportions](/Screenshots/Proportion%20investors.png)
 :small_blue_diamond:Dominant stages of businesses the investors spend much on
 ![stages in the ecosystem doing well](/Screenshots/dominat%20stages.png)
-:small_blue_diamond:Top the industrial cisties with businesses in Stage B
+:small_blue_diamond:Top industrial cisties with businesses in Stage B
 ![cities with most stage B startups](/Screenshots/Industrial%20hubs.png)
 
 # 14. Test Hypothesis at 95% confidence level
