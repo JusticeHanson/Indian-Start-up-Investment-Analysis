@@ -60,7 +60,7 @@ In this phase I retrieved data from multiple sources for the analysis.
 
 #  7. Infomation on Data
 The data for the project was provided by Azubi Africa (Trainers).
-The data contains 4 csv files: data_2018.csv, data_20192.csv, data_2020 (*from SQL server*) and data_2021 (*also from SQL server*)
+The data contains 4 files: data_2018.csv, data_20192.csv, data_2020 (*from SQL server*) and data_2021 (*also from SQL server*)
 
 ### 7.1 The columns in the data are:
 
@@ -186,7 +186,7 @@ merged_data.head(5)
 This helped me to have consistent column names for the merged dataset
 
 #### 10.6 created new column 'Year'
-purposely to identify each of the 4 datasets withing the merged_data
+purposely to identify each of the 4 datasets within the merged_data
 
 #### 11.2 check data info to understand data structure
 ![info on merged_data](/Screenshots/merged.info.png)
@@ -247,10 +247,10 @@ for characteristic, count in counts.items():
 print(f'Numeric values - {numeric_count}')
 ```
 ![Output of amount value characteristics](/Screenshots/Val%20Character.png)
-- Values ['Series C', 'Seed', 'Pre-series A'] indicates wrong enteries, they were pushed to their respective column 'stage column'
+- Values ['Series C', 'Seed', 'Pre-series A'] indicates wrong entries, they were pushed to their respective column 'stage column'
 - All dollar symbols were dropped
 - The dahes '-' were dropped and replaced with nan
-- All values with rupee symbols where converted to dollors by multiplying the respective values by the average exchange rate
+- All values with rupee symbols where converted to dollars by multiplying the respective values by the average exchange rate
 ![currency conversion](/Screenshots/Conversion.png)
 
 The corrections in amount column was done using the code:
