@@ -360,3 +360,9 @@ Based on the observations on the Indian startup ecosystem, here are some informe
 4. **Strategic Partnerships with Top Investors:** The team is encouraged to form strategic partnerships with top investors like Inflection Point Ventures, Venture Catalysts, and Mumbai Angels Network. These investors have a proven track record of funding successful startups across diverse sectors and can provide valuable insights, mentorship, funding opportunities.
 
 5. **Focus on Series B Investments:** Given the preference of top investors for Series B investments, the team should consider targeting startups at this stage for investment or partnership opportunities. Series B startups have typically proven their business model and are ready to scale, offering lower risk and significant growth potential.
+
+[Power BI Report](https://app.powerbi.com/groups/me/reports/b915873a-281d-4188-871b-d4044026e0a2?pbi_source=desktop)
+
+![Power BIReport](/Screenshots/Screenshot%202024-06-07%20193701.png)
+
+[Medium Publication](https://medium.com/@just.hanson1/exploratory-data-analysis-on-the-indian-startup-ecosystem-2018-2021-4d56bc1b9c78)
